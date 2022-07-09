@@ -49,7 +49,7 @@ namespace grid {
 	void hoverCheck(const RenderWindow& target);
 	void clickCheck(const RenderWindow& target);
 	void switchTurn();
-	int getIndex(vector<Cell>& cells, Cell& cell);
+	int getIndex(Cell& cell);
 	bool winCheck(); //
 	bool drawCheck();
 };
