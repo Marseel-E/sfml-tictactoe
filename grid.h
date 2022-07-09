@@ -28,6 +28,7 @@ namespace grid {
 			RectangleShape getShape();
 			bool isClicked();
 			Text getText();
+			bool check(string symbol);
 
 			// modifiers
 			void setSize(int size);
@@ -42,6 +43,7 @@ namespace grid {
 	inline Vector2f mousePosF;
 	inline Font FONT;
 	inline string turn;
+	inline bool finished;
 
 	// functions
 	void Init();
@@ -49,7 +51,6 @@ namespace grid {
 	void hoverCheck(const RenderWindow& target);
 	void clickCheck(const RenderWindow& target);
 	void switchTurn();
-	int getIndex(Cell& cell);
 	bool winCheck(); //
 	bool drawCheck();
 };

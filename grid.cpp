@@ -22,9 +22,6 @@ void grid::Init() {
 		}
 
 		grid::Cell newCell(cellSize, xPos, yPos, Color::White);
-		// debug
-		newCell.click(std::to_string(grid::getIndex(newCell)));
-
 		grid::cells.push_back(newCell);
 
 	}
@@ -77,17 +74,32 @@ void grid::switchTurn() {
 }
 
 
-int grid::getIndex(grid::Cell& cell) {
-	vector<grid::Cell>& cells = grid::cells;
-
-	vector<grid::Cell>::iterator itr = std::find(cells.begin(), cells.end(), cell);
-
-	return std::distance(cells.begin(), itr);
-}
-
-
 bool grid::winCheck() {
-	return true;
+	vector<grid::Cell>& cells = grid::cells;
+	string& turn = grid::turn;
+
+	for (int i = 0; i < 2; i++) {
+		if (
+			(cells.at(0).check(turn)
+				&& (
+					(cells.at(1).check(turn) && cells.at(2).check(turn))
+					|| (cells.at(3).check(turn) && cells.at(6).check(turn))
+					|| (cells.at(4).check(turn) && cells.at(8).check(turn))
+				)
+			)
+			|| (cells.at(6).check(turn) && cells.at(7).check(turn) && cells.at(8).check(turn))
+			|| (cells.at(1).check(turn) && cells.at(4).check(turn) && cells.at(7).check(turn))
+			|| (cells.at(2).check(turn) && cells.at(5).check(turn) && cells.at(8).check(turn))
+			|| (cells.at(2).check(turn) && cells.at(4).check(turn) && cells.at(6).check(turn))
+			|| (cells.at(3).check(turn) && cells.at(4).check(turn) && cells.at(5).check(turn))
+		) {
+			return true;
+		}
+
+		grid::switchTurn();
+	}
+
+	return false;
 }
 
 
@@ -127,6 +139,10 @@ Text grid::Cell::getText() {
 	return this->text;
 }
 
+bool grid::Cell::check(string symbol) {
+	return this->text.getString() == symbol;
+}
+
 
 // modifiers
 void grid::Cell::setSize(int size) {
@@ -159,5 +175,25 @@ void grid::Cell::click(string symbol) {
 	this->text.setFillColor(Color::Black);
 	this->setColor(Color::White);
 
-	grid::switchTurn();
+	if (!grid::finished) {
+		if (grid::winCheck()) {
+			std::cout << "win: " << grid::turn << std::endl;
+			grid::finished = true;
+
+			for (auto& cell: grid::cells) {
+				cell.click(grid::turn);
+				cell.setColor(Color::Green);
+			}
+
+		} else if (grid::drawCheck()) {
+			std::cout << "draw" << std::endl;
+			grid::finished = true;
+
+			for (auto& cell: grid::cells) {
+				cell.setColor(Color::Yellow);
+			}
+		}
+
+		grid::switchTurn();
+	}
 }
