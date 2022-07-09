@@ -1,0 +1,2 @@
+main: grid.cpp main.cpp
+	g++ grid.cpp main.cpp -o "tictactoe" -I C:/Users/Marsel/Documents/SFML-2.5.1/include -L C:/Users/Marsel/Documents/SFML-2.5.1/lib -D SFML_STATIC -lsfml-graphics -lsfml-window -lsfml-system && tictactoe.exe
