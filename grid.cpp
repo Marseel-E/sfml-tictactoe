@@ -9,7 +9,7 @@ void grid::Init() {
 
 	int cellSize = (500 / 3) - (10 * 2);
 	float xPos = 0;
-	float yPos = 0;
+	float yPos = 40;
 
 	for (int i = 0; i < 9; i++) {
 		if (i > 0) {
@@ -196,4 +196,10 @@ void grid::Cell::click(string symbol) {
 
 		grid::switchTurn();
 	}
+}
+
+void grid::Cell::reset() {
+	this->clicked = false;
+	this->text.setString("");
+	this->setColor(Color::White);
 }

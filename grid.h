@@ -35,6 +35,7 @@ namespace grid {
 			void setPosition(float xPos, float yPos);
 			void setColor(Color color);
 			void click(string symbol);
+			void reset();
 	};
 
 	// variables
